@@ -103,28 +103,27 @@ public class CaesarWorker {
         //составить лист отсортированный по частоте использования букв  в xText
         System.out.println("частота букв в зашифрованном тексте");
         List<String> sortedEncrypt = getSymbolFrequescy(xText.toString());
-        //определим границу применимости 
-        int ttSize = sortedAlphabet.size();
-        if (sortedAlphabet.size() > sortedEncrypt.size()) ttSize = sortedEncrypt.size();
-        //заменим одно на другое
-        String ttRes = "";
-        for(int i = 0; i < ttSize; i++) {
-            ttRes =  xText.toString().toUpperCase().replace(sortedEncrypt.get(i), sortedAlphabet.get(i));
+        String ttSource = xText.toString();
+        StringBuilder ttRes = new StringBuilder();
+        for(int i = 0; i < ttSource.length(); i++) {
+            String ttSymbol = String.valueOf(ttSource.charAt(i)).toUpperCase();
+            if (alphabet.contains(ttSymbol)) {
+                ttRes.append(sortedAlphabet.get(sortedEncrypt.indexOf(ttSymbol)));
+            }
         }
-        return ttRes;
+        return ttRes.toString();
     }
     
     public List<String> getSymbolFrequescy(String xString) {;
         HashMap<String, Integer> symbolMap = new HashMap<String, Integer>();
         for (int i = 0; i < xString.length(); i++) {
-            String c = String.valueOf(xString.charAt(i)).toUpperCase();
-            Integer val = symbolMap.get(c);
-            if (alphabet.lastIndexOf(c) > -1) {
-                if (val != null) {
-                    symbolMap.put(c, new Integer(val + 1));
+            String symbol = String.valueOf(xString.charAt(i)).toUpperCase();
+            if (alphabet.contains(symbol)) {
+                if (symbolMap.containsKey(symbol)) {
+                    symbolMap.put(symbol, symbolMap.get(symbol) + 1);
                 }
                 else {
-                   symbolMap.put(c, 1);
+                    symbolMap.put(symbol, 1);
                 }    
             }
         }

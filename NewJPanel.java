@@ -656,8 +656,8 @@ public class NewJPanel extends javax.swing.JPanel {
         File ttInputFile = new File(xFileName);
         StringBuilder someText = new StringBuilder();
         try (Scanner ttInput = new Scanner(ttInputFile)) {
-            while (ttInput.hasNext()) {
-                someText.append(ttInput.next());
+            while (ttInput.hasNextLine()) {
+                someText.append(ttInput.nextLine() +"\n" );
             }
         }
         return someText;
